@@ -33,4 +33,33 @@ To shut down the vagrant image use:
 ```
 vagrant halt
 ```
- 
+
+### sharding-playground
+
+This sets up 3 servers with MongoDB connected via a host-only network.
+
+Startup:
+```
+cd sharding-playground
+vagrant up
+```
+
+The IP addresses of the 3 servers are
+
+- 10.11.12.13 (server1)
+- 10.11.12.14 (server2)
+- 10.11.12.15 (server3)
+
+Each server has the same setup. If you want to connect to a certain server via ssh use (e.g. server1):
+
+```
+vagrant ssh server1
+```
+
+If you want to connect to the MongoDB instances from your host use:
+
+```
+mongo 10.11.12.13
+```
+
+There is nothing set up for the MongoDB servers. Setting up sharding etc. is aimed to be a group task at our user group meeting.
