@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+
+  config.vm.define :server1 do |server1| 
+    server1.vm.box = "precise64"
+    server1.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+    server1.vm.network :hostonly, "10.11.12.13"
+    
+    server1.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "manifests"
+      puppet.manifest_file  = "sharding-playground.pp"
+    end
+  end
+
+  config.vm.define :server2 do |server2| 
+    server2.vm.box = "precise64"
+    server2.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+    server2.vm.network :hostonly, "10.11.12.14"
+    
+    server2.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "manifests"
+      puppet.manifest_file  = "sharding-playground.pp"
+    end
+  end
+
+  config.vm.define :server3 do |server3| 
+    server3.vm.box = "precise64"
+    server3.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+    server3.vm.network :hostonly, "10.11.12.15"
+    
+    server3.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "manifests"
+      puppet.manifest_file  = "sharding-playground.pp"
+    end
+  end
+
+end
