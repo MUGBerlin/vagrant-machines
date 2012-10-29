@@ -11,7 +11,13 @@ package{ "mongodb":
         require => Notify['Installing Packages!'],
 }
 
+file{"/etc/mongodb.conf":
+  ensure => "present",
+  source => "/vagrant/manifests/mongodb.conf",
+  require => Package['mongodb'],
+}
+
 service{"mongodb":
         ensure => running,
-        require => Package['mongodb'],
+        subscribe => File['/etc/mongodb.conf'],
 }
