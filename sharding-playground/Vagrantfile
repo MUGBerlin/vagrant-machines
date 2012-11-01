@@ -3,42 +3,51 @@
 
 Vagrant::Config.run do |config|
 
-  config.vm.define :server1 do |server1| 
-    server1.vm.box = "precise64"
-    server1.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.define :shard01 do |shard01| 
+    shard01.vm.box = "precise64"
+    shard01.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    #server1.vm.network :hostonly, "10.11.12.13"
-    server1.vm.network :bridged
-    server1.vm.host_name = "shard01"
-    server1.vm.provision :puppet do |puppet|
+    shard01.vm.network :bridged
+    shard01.vm.host_name = "shard01"
+    shard01.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
       puppet.manifest_file  = "sharding-playground.pp"
     end
   end
 
-  config.vm.define :server2 do |server2| 
-    server2.vm.box = "precise64"
-    server2.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.define :shard02 do |shard02| 
+    shard02.vm.box = "precise64"
+    shard02.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    #server2.vm.network :hostonly, "10.11.12.14"
-    server2.vm.network :bridged
-    server2.vm.host_name = "shard02"
-    server2.vm.provision :puppet do |puppet|
+    shard02.vm.network :bridged
+    shard02.vm.host_name = "shard02"
+    shard02.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
       puppet.manifest_file  = "sharding-playground.pp"
     end
   end
 
-  config.vm.define :server3 do |server3| 
-    server3.vm.box = "precise64"
-    server3.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.define :shard03 do |shard03| 
+    shard03.vm.box = "precise64"
+    shard03.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    #server3.vm.network :hostonly, "10.11.12.15"
-    server3.vm.network :bridged
-    server3.vm.host_name = "shard03"
-    server3.vm.provision :puppet do |puppet|
+    shard03.vm.network :bridged
+    shard03.vm.host_name = "shard03"
+    shard03.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
       puppet.manifest_file  = "sharding-playground.pp"
+    end
+  end
+  
+  config.vm.define :server4 do |configsrv| 
+    configsrv.vm.box = "precise64"
+    configsrv.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+    configsrv.vm.network :bridged
+    configsrv.vm.host_name = "configsrv"
+    configsrv.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "manifests"
+      puppet.manifest_file  = "configserver-playground.pp"
     end
   end
 
