@@ -39,7 +39,7 @@ Vagrant::Config.run do |config|
     end
   end
   
-  config.vm.define :server4 do |configsrv| 
+  config.vm.define :configsrv do |configsrv| 
     configsrv.vm.box = "precise64"
     configsrv.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
