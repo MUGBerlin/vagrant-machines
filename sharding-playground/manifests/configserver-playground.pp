@@ -34,7 +34,7 @@ exec { "start-cfg":
 }
 
 exec { "start-mongos":
-        command => "/usr/bin/mongos --configdb shard04.local:27018 --port 27019 &",
+        command => "/usr/bin/mongos --configdb configsrv.local:27018 --port 27019 &",
         path    => "/usr/local/bin/:/bin/",
         require => [ Exec['start-cfg'], Package['mongodb']]
 }
