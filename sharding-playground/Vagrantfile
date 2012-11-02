@@ -7,7 +7,8 @@ Vagrant::Config.run do |config|
     shard01.vm.box = "precise64"
     shard01.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    shard01.vm.network :bridged
+    #set this to my interface to avoid questions from vagrant, use 'shard01.vm.network :bridged' to allow interactive mode
+    shard01.vm.network :bridged, :bridge => 'en1: WLAN (AirPort)' 
     shard01.vm.host_name = "shard01"
     shard01.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
@@ -19,7 +20,8 @@ Vagrant::Config.run do |config|
     shard02.vm.box = "precise64"
     shard02.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    shard02.vm.network :bridged
+    #set this to my interface to avoid questions from vagrant, use 'shard02.vm.network :bridged' to allow interactive mode
+    shard02.vm.network :bridged, :bridge => 'en1: WLAN (AirPort)'
     shard02.vm.host_name = "shard02"
     shard02.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
@@ -31,7 +33,8 @@ Vagrant::Config.run do |config|
     shard03.vm.box = "precise64"
     shard03.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    shard03.vm.network :bridged
+    #set this to my interface to avoid questions from vagrant, use 'shard03.vm.network :bridged' to allow interactive mode
+    shard03.vm.network :bridged, :bridge => 'en1: WLAN (AirPort)'
     shard03.vm.host_name = "shard03"
     shard03.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
@@ -43,7 +46,8 @@ Vagrant::Config.run do |config|
     configsrv.vm.box = "precise64"
     configsrv.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    configsrv.vm.network :bridged
+    #set this to my interface to avoid questions from vagrant, use 'configsrv.vm.network :bridged' to allow interactive mode
+    configsrv.vm.network :bridged, :bridge => 'en1: WLAN (AirPort)'
     configsrv.vm.host_name = "configsrv"
     configsrv.vm.provision :puppet do |puppet|
       puppet.manifests_path = "manifests"
