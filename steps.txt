@@ -1,0 +1,40 @@
+Connect to vgrant instance and to mongos
+
+vagrant ssh configsrv
+mongo --host configsrv.local --port 27019
+
+
+Add the shards 
+
+sh.addShard( "shard01.local:27017" )
+sh.addShard( "shard02.local:27017" )
+sh.addShard( "shard03.local:27017" )
+
+
+Set chunk size to something demo usable
+
+use config
+db.settings.save( { _id:"chunksize", value: 10 } )
+
+Enable Sharding for wikipedia
+
+sh.enableSharding("wikipedia")
+
+
+Enable sharding on the collection
+
+sh.shardCollection("wikipedia.articles", {_id: 1})
+
+db.articles.ensureIndex({url: 1})
+sh.shardCollection("wikipedia.articles", {url: 1})
+
+db.articles.ensureIndex({title: 1})
+sh.shardCollection("wikipedia.articles", {title: 1})
+
+db.articles.ensureIndex({sKey: 1})
+sh.shardCollection("wikipedia.articles", {sKey: 1})
+
+
+Testdoc
+
+db.articles.insert( {url: "http://foo.bar", title: "Test", text: "Test"} )

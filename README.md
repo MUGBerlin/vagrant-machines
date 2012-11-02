@@ -129,3 +129,7 @@ db.articles.stats()
 ```
 
 Note: the balancer does not run all the time - it can take a while until the chunks are moved around.
+
+#### Links
+
+Useful link to the MongoDB documentation: http://docs.mongodb.org/manual/administration/sharding/
