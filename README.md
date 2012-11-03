@@ -48,6 +48,8 @@ cd sharding-playground
 vagrant up
 ```
 
+The startup can take a while - it took 4 minutes per instance with my internet connection.
+
 The IP addresses of the 3 shard servers are
 
 - shard01.local

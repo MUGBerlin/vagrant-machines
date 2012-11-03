@@ -46,7 +46,7 @@ exec { "start-cfg":
 }
 
 exec { "start-mongos":
-  command => "/bin/sleep 10 && /usr/bin/mongos --configdb configsrv.local:27018 --port 27019 > /tmp/mongos.log &",
+  command => "/bin/sleep 30 && /usr/bin/mongos --configdb configsrv.local:27018 --port 27019 > /tmp/mongos.log &",
   path    => "/usr/local/bin/:/bin/",
   require => [ Exec['start-cfg'], Package['mongodb-10gen']]
 }
