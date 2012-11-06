@@ -21,3 +21,8 @@ service{"mongodb":
         ensure => running,
         subscribe => File['/etc/mongodb.conf'],
 }
+
+package{ "libnss-mdns":
+        ensure => present,
+        require => Notify['Installing Packages!']
+}
