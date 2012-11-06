@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 
 group { "puppet":
-  ensure => "present",
+        ensure => "present",
 }
 
 notify { "Installing Packages!": }
@@ -34,7 +34,19 @@ package { "libnss-mdns":
   require => Notify['Installing Packages!']
 }
 
-service{"mongodb":
-        ensure => running,
-        subscribe => File['/etc/mongodb.conf'],
+file { "/tmp/mongo_configdb":
+	ensure  => directory,
+	require => Notify['Installing Packages!']
+}
+
+exec { "start-cfg":
+	command => "/usr/bin/mongod --configsvr --dbpath /tmp/mongo_configdb/ --port 27018 > /tmp/mongocfg.log &",
+  path    => "/usr/local/bin/:/bin/",
+	require => [ File['/tmp/mongo_configdb'], Package['mongodb-10gen']]
+}
+
+exec { "start-mongos":
+  command => "/bin/sleep 30 && /usr/bin/mongos --configdb configsrv.local:27018 --port 27019 > /tmp/mongos.log &",
+  path    => "/usr/local/bin/:/bin/",
+  require => [ Exec['start-cfg'], Package['mongodb-10gen']]
 }

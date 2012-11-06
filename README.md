@@ -33,10 +33,14 @@ To shut down the vagrant image use:
 ```
 vagrant halt
 ```
+or
 
+```
+vagrant destroy
+```
 ### sharding-playground
 
-This sets up 3 servers with MongoDB connected via a host-only network.
+This sets up 4 servers with MongoDB connected via a host-only network.
 
 Startup:
 ```
@@ -44,22 +48,90 @@ cd sharding-playground
 vagrant up
 ```
 
-The IP addresses of the 3 servers are
+The startup can take a while - it took 4 minutes per instance with my internet connection.
 
-- 10.11.12.13 (server1)
-- 10.11.12.14 (server2)
-- 10.11.12.15 (server3)
+The IP addresses of the 3 shard servers are
 
-Each server has the same setup. If you want to connect to a certain server via ssh use (e.g. server1):
+- shard01.local
+- shard02.local
+- shard03.local
+
+The IP adress of the configserver and mongos instance is
+
+- configsrv.local
+
+Each server has the same setup. If you want to connect to a certain server via ssh use (e.g. shard01):
 
 ```
-vagrant ssh server1
+vagrant ssh shard01
 ```
 
 If you want to connect to the MongoDB instances from your host use:
 
 ```
-mongo 10.11.12.13
+mongo --host configsrv.local --port 27019
 ```
 
 There is nothing set up for the MongoDB servers. Setting up sharding etc. is aimed to be a group task at our user group meeting.
+
+#### Connect to vgrant instance and to mongos
+
+```
+vagrant ssh configsrv
+mongo --host configsrv.local --port 27019
+```
+
+#### Add the shards 
+
+```
+sh.addShard( "shard01.local:27017" )
+sh.addShard( "shard02.local:27017" )
+sh.addShard( "shard03.local:27017" )
+```
+
+#### Set chunk size to something demo usable
+
+```
+use config
+db.settings.save( { _id:"chunksize", value: 1 } )
+```
+
+#### Enable Sharding for wikipedia
+
+```
+sh.enableSharding("wikipedia")
+```
+
+#### Enable sharding on the collection
+
+```
+sh.shardCollection("wikipedia.articles", {_id: 1})
+```
+or
+```
+db.articles.ensureIndex({url: 1})
+sh.shardCollection("wikipedia.articles", {url: 1})
+```
+or
+```
+db.articles.ensureIndex({title: 1})
+sh.shardCollection("wikipedia.articles", {title: 1})
+```
+or
+```
+db.articles.ensureIndex({sKey: 1})
+sh.shardCollection("wikipedia.articles", {sKey: 1})
+```
+
+#### Check Shards
+
+```
+use wikipedia
+db.articles.stats()
+```
+
+Note: the balancer does not run all the time - it can take a while until the chunks are moved around.
+
+#### Links
+
+Useful link to the MongoDB documentation: http://docs.mongodb.org/manual/administration/sharding/
