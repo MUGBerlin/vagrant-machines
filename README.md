@@ -7,7 +7,7 @@ This is why we use it for experiments in our MongoDB User Group sessions. This r
 
 ## Preconditions
 
-Please follow the install instructions at http://vagrantup.com/ 
+Please follow the install instructions at http://vagrantup.com/. Use the latest version from vagrant and install the latest version of VirtualBox (the version from the projects homepages are recommended). After the installation, verify that virtualization options are enabled in your bios, if you are using a 'normal' pc. We did not encounter any virtualization problems on macs. 
 
 ## The machines
 
