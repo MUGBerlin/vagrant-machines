@@ -6,6 +6,17 @@ group { "puppet":
 
 notify { "Installing Packages!": }
 
+package { "libnss-mdns":
+  ensure  => present,
+  require => Notify['Installing Packages!']
+}
+
+file { "/tmp/mongo_configdb":
+	ensure  => directory,
+	require => Notify['Installing Packages!']
+}
+
+
 file {"/etc/apt/sources.list.d/10gen.list":
   ensure  => "present",
   source  => "/vagrant/manifests/10gen.list",
@@ -19,24 +30,14 @@ exec { "add-10genkey":
 }
 
 package { "mongodb-10gen":
-        ensure => present,
-        require => Exec['add-10genkey'],
+  ensure => present,
+  require => Exec['add-10genkey'],
 }
 
 file { "/etc/mongodb.conf":
   ensure  => "present",
   source  => "/vagrant/manifests/mongodb.conf",
   require => Package['mongodb-10gen'],
-}
-
-package { "libnss-mdns":
-  ensure  => present,
-  require => Notify['Installing Packages!']
-}
-
-file { "/tmp/mongo_configdb":
-	ensure  => directory,
-	require => Notify['Installing Packages!']
 }
 
 exec { "start-cfg":
