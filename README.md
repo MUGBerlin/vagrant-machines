@@ -89,7 +89,7 @@ sh.addShard( "shard02.local:27017" )
 sh.addShard( "shard03.local:27017" )
 ```
 
-#### Set chunk size to something demo usable
+#### Set chunk size to something demo usable (optional)
 
 ```
 use config
@@ -125,12 +125,19 @@ sh.shardCollection("wikipedia.articles", {sKey: 1})
 
 #### Check Shards
 
+To see how the documents are distributed through our little demo cluster, you can run the command below while importing documents:
+
 ```
 use wikipedia
 db.articles.stats()
 ```
 
 Note: the balancer does not run all the time - it can take a while until the chunks are moved around.
+
+#### Problems
+
+- IP already used within your network
+  - open the vagrant fiel and change the ip of all nodes: xxx.vm.network :hostonly, "10.0.0.24" 
 
 #### Links
 
